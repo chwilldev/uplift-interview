@@ -1,13 +1,13 @@
 import React, { useMemo, useState } from 'react';
+import winner from './assets/winner.svg';
+import { DealButton } from './components/DealButton';
 import { InfoBox } from './components/InfoBox';
 import { PlayField } from './components/PlayField';
-import { DealButton } from './components/DealButton';
 import { ResetButton } from './components/ResetButton';
 import { useDealMutation } from './generated/graphql-types';
-import winner from './assets/winner.svg';
 
 const App: React.FC = () => {
-  const [dealMutation, { data, loading, error }] = useDealMutation({
+  const [dealMutation, { data, loading }] = useDealMutation({
     variables: {
       isInitial: false,
     },
@@ -19,7 +19,7 @@ const App: React.FC = () => {
     const receiveData = await dealMutation({
       variables: { isInitial: !cardLog.length },
     });
-    setCardLog((cardLog) => [...cardLog, ...(receiveData.data?.deal?.cards as CardType[])]);
+    setCardLog((prevCardLog) => [...prevCardLog, ...(receiveData.data?.deal?.cards as CardType[])]);
   };
 
   const handleReset = async () => {
@@ -27,7 +27,7 @@ const App: React.FC = () => {
     const receiveData = await dealMutation({
       variables: { isInitial: true },
     });
-    setCardLog((cardLog) => [...cardLog, ...(receiveData.data?.deal?.cards as CardType[])]);
+    setCardLog((prevCardLog) => [...prevCardLog, ...(receiveData.data?.deal?.cards as CardType[])]);
   };
 
   const remainCount = useMemo(() => 52 - cardLog.length, [cardLog]);
@@ -39,6 +39,7 @@ const App: React.FC = () => {
       if (card.number === 'A') {
         count += 1;
       }
+      return null;
     });
     return 4 - count;
   }, [cardLog]);
@@ -51,17 +52,17 @@ const App: React.FC = () => {
       </div>
       {!remainAces && !remainCount && (
         <div className="absolute top-48 flex justify-center w-full pr-24 animate-bounce">
-          <img src={winner} alt="winner"></img>
+          <img src={winner} alt="winner" />
         </div>
       )}
       {!loading && data ? (
         <PlayField cards={data?.deal?.cards as CardType[]} />
       ) : (
-        <div className="h-320 w-96"></div>
+        <div className="h-320 w-96" />
       )}
       <div className="text-center mt-32">
         {!remainAces && remainCount ? (
-          <p className="text-white text-3xl">{'You lose. Better luck next time!'}</p>
+          <p className="text-white text-3xl">You lose. Better luck next time!</p>
         ) : (
           <div />
         )}

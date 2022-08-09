@@ -3,7 +3,6 @@ import React from 'react';
 type InfoBoxProps = {
   title: string;
   count: number;
-  children?: React.ReactNode;
 };
 
 export const InfoBox: React.FC<InfoBoxProps> = ({ title, count }) => {

@@ -5,7 +5,7 @@ type DealButtonProp = {
   content: string;
 };
 
-export const ResetButton = ({ handleReset, content }: DealButtonProp) => {
+export const ResetButton: React.FC<DealButtonProp> = ({ handleReset, content }: DealButtonProp) => {
   return (
     <button
       type="button"

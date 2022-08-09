@@ -3,7 +3,6 @@ import { Card as PlayingCard } from './PlayingCard';
 
 type PlayFieldProps = {
   cards: CardType[];
-  children?: React.ReactNode;
 };
 
 export const PlayField: React.FC<PlayFieldProps> = ({ cards }) => {

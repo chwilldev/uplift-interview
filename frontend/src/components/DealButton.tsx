@@ -4,7 +4,7 @@ type DealButtonProp = {
   handleDeal: () => void;
 };
 
-export const DealButton = ({ handleDeal }: DealButtonProp) => {
+export const DealButton: React.FC<DealButtonProp> = ({ handleDeal }: DealButtonProp) => {
   return (
     <button
       type="button"
