@@ -1,7 +1,8 @@
 overwrite: true
-schema: '../server/schema.json'
-# schema: '../node-server/src/schema.graphql'
-documents: null
+# schema: '../server/schema.json'
+schema: '../node-server/src/schema.graphql'
+documents:
+  - ./src/graphql/query/deal.graphql
 generates:
   ./src/generated/graphql-types.ts:
     plugins:

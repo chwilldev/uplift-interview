@@ -1,15 +1,72 @@
-import React from 'react';
-import logo from './logo.svg';
-import styles from './App.module.css';
+import React, { useMemo, useState } from 'react';
+import { InfoBox } from './components/InfoBox';
+import { PlayField } from './components/PlayField';
+import { DealButton } from './components/DealButton';
+import { ResetButton } from './components/ResetButton';
+import { useDealMutation } from './generated/graphql-types';
+import winner from './assets/winner.svg';
 
 const App: React.FC = () => {
+  const [dealMutation, { data, loading, error }] = useDealMutation({
+    variables: {
+      isInitial: false,
+    },
+  });
+
+  const [cardLog, setCardLog] = useState<CardType[]>([]);
+
+  const handleDeal = async () => {
+    const receiveData = await dealMutation({
+      variables: { isInitial: !cardLog.length },
+    });
+    setCardLog((cardLog) => [...cardLog, ...(receiveData.data?.deal?.cards as CardType[])]);
+  };
+
+  const handleReset = async () => {
+    setCardLog([]);
+    const receiveData = await dealMutation({
+      variables: { isInitial: true },
+    });
+    setCardLog((cardLog) => [...cardLog, ...(receiveData.data?.deal?.cards as CardType[])]);
+  };
+
+  const remainCount = useMemo(() => 52 - cardLog.length, [cardLog]);
+
+  const remainAces = useMemo(() => {
+    let count = 0;
+
+    cardLog.find((card) => {
+      if (card.number === 'A') {
+        count += 1;
+      }
+    });
+    return 4 - count;
+  }, [cardLog]);
+
   return (
-    <div className="bg-gray-200 p-10 min-h-full">
-      <div className={styles.body}>
-        <img className="h-16 w-16 mx-auto" src={logo} alt="React" />
-        <p>
-          To get started, edit <code>src/App.js</code> and save to reload.
-        </p>
+    <div className="bg-green-600 p-10 w-100 min-h-screen items-center relative">
+      <div className="w-100 flex justify-center mt-20">
+        <InfoBox title="Cards Left" count={remainCount} />
+        <InfoBox title="Aces Left" count={remainAces} />
+      </div>
+      {!remainAces && !remainCount && (
+        <div className="absolute top-48 flex justify-center w-full pr-24 animate-bounce">
+          <img src={winner} alt="winner"></img>
+        </div>
+      )}
+      {!loading && data ? (
+        <PlayField cards={data?.deal?.cards as CardType[]} />
+      ) : (
+        <div className="h-320 w-96"></div>
+      )}
+      <div className="text-center mt-32">
+        {!remainAces && remainCount ? (
+          <p className="text-white text-3xl">{'You lose. Better luck next time!'}</p>
+        ) : (
+          <div />
+        )}
+        {remainAces ? <DealButton handleDeal={handleDeal} /> : <div />}
+        <ResetButton handleReset={handleReset} content={!remainAces ? 'Play Again' : 'Reset'} />
       </div>
     </div>
   );
