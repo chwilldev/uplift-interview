@@ -1,11 +1,11 @@
 import React from 'react';
 
-type DealButtonProp = {
+type ResetButtonProps = {
   handleReset: () => void;
   content: string;
 };
 
-export const ResetButton: React.FC<DealButtonProp> = ({ handleReset, content }: DealButtonProp) => {
+export const ResetButton: React.FC<ResetButtonProps> = ({ handleReset, content }) => {
   return (
     <button
       type="button"
