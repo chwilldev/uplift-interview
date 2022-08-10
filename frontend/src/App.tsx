@@ -18,7 +18,14 @@ const App: React.FC = () => {
   useEffect(() => {
     if (data?.deal?.cards) {
       const cards = data?.deal.cards;
-      setCardLog((prevCardLog) => [...prevCardLog, ...cards]);
+      setCardLog((prevCardLog) => {
+        const sameCount = prevCardLog.reduce(
+          (counter, prevCard) => counter + Number(cards.find((card) => prevCard.id === card.id)),
+          0
+        );
+        if (!sameCount) return [...prevCardLog, ...cards];
+        return prevCardLog;
+      });
     }
   }, [data]);
 
@@ -35,32 +42,32 @@ const App: React.FC = () => {
     });
   };
 
-  const remainCount = 52 - cardLog.length;
+  const remainingCount = 52 - cardLog.length;
 
-  const remainAces = useMemo(() => {
+  const remainingAces = useMemo(() => {
     return 4 - cardLog.reduce((aceCount, card) => aceCount + Number(card.number === 'A'), 0);
   }, [cardLog]);
 
   return (
     <div className="bg-green-600 p-10 w-100 min-h-screen items-center relative">
       <div className="w-100 flex justify-center mt-20">
-        <InfoBox title="Cards Left" count={remainCount} />
-        <InfoBox title="Aces Left" count={remainAces} />
+        <InfoBox title="Cards Left" count={remainingCount} />
+        <InfoBox title="Aces Left" count={remainingAces} />
       </div>
-      {!remainAces && !remainCount && (
+      {!remainingAces && !remainingCount && (
         <div className="absolute top-48 flex justify-center w-full pr-24 animate-bounce">
           <img src={winner} alt="winner" />
         </div>
       )}
       {!loading && data ? <PlayField cards={data.deal.cards} /> : <div className="h-320 w-96" />}
       <div className="text-center mt-32">
-        {!remainAces && remainCount ? (
+        {!remainingAces && remainingCount ? (
           <p className="text-white text-3xl">You lose. Better luck next time!</p>
         ) : (
           <div />
         )}
-        {remainAces ? <DealButton handleDeal={handleDeal} /> : <div />}
-        <ResetButton handleReset={handleReset} content={!remainAces ? 'Play Again' : 'Reset'} />
+        {remainingAces ? <DealButton handleDeal={handleDeal} /> : <div />}
+        <ResetButton handleReset={handleReset} content={!remainingAces ? 'Play Again' : 'Reset'} />
       </div>
     </div>
   );
