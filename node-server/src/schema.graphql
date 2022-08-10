@@ -5,7 +5,14 @@ type Game {
 type Card {
   id: Int!
   number: String!
-  suit: String!
+  suit: Suits!
+}
+
+enum Suits {
+  Heart
+  Clover
+  Diamond
+  Spade
 }
 
 type DealResult {
