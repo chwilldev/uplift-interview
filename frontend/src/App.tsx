@@ -35,18 +35,10 @@ const App: React.FC = () => {
     });
   };
 
-  const remainCount = useMemo(() => 52 - cardLog.length, [cardLog]);
+  const remainCount = 52 - cardLog.length;
 
   const remainAces = useMemo(() => {
-    let count = 0;
-
-    cardLog.find((card) => {
-      if (card.number === 'A') {
-        count += 1;
-      }
-      return null;
-    });
-    return 4 - count;
+    return 4 - cardLog.reduce((aceCount, card) => aceCount + Number(card.number === 'A'), 0);
   }, [cardLog]);
 
   return (
