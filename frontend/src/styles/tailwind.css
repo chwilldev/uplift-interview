@@ -3,3 +3,26 @@
 @tailwind components;
 
 @tailwind utilities;
+
+@import url('https://fonts.googleapis.com/css?family=Courier+Prime');
+@import url('https://fonts.googleapis.com/css?family=Alfa+Slab+One');
+
+@layer base {
+  html {
+    font-family: 'Courier Prime';
+  }
+
+  :root {
+    --button-color: #efce4b;
+  }
+}
+
+@layer utilities {
+  .font-alfa {
+    font-family: 'Alfa Slab One';
+  }
+
+  .button-rounded {
+    border-radius: 14px;
+  }
+}
