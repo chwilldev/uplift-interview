@@ -3,32 +3,32 @@ import Clover from '../assets/Clover.svg';
 import Diamond from '../assets/Diamond.svg';
 import Heart from '../assets/Heart.svg';
 import Spade from '../assets/Spade.svg';
-import { Suits } from '../generated/graphql-types';
+import { Suit } from '../generated/graphql-types';
 
 interface PlayingCardProps {
   number: string;
-  suit: Suits;
+  suit: Suit;
   order: number;
 }
 
-const getSuitSourceURL = (suit: Suits) => {
+const getSuitSourceURL = (suit: Suit) => {
   switch (suit) {
-    case 'Heart':
+    case Suit.Heart:
       return Heart;
-    case 'Clover':
+    case Suit.Clover:
       return Clover;
-    case 'Diamond':
+    case Suit.Diamond:
       return Diamond;
     default:
       return Spade;
   }
 };
 
-const getTextColor = (suit: Suits) => {
+const getTextColor = (suit: Suit) => {
   switch (suit) {
-    case 'Heart':
+    case Suit.Heart:
       return 'text-red-600';
-    case 'Diamond':
+    case Suit.Diamond:
       return 'text-red-600';
     default:
       return 'text-black';

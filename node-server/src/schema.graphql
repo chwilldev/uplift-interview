@@ -5,10 +5,10 @@ type Game {
 type Card {
   id: Int!
   number: String!
-  suit: Suits!
+  suit: Suit!
 }
 
-enum Suits {
+enum Suit {
   Heart
   Clover
   Diamond
