@@ -1,10 +1,10 @@
-import React, { useMemo, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import winner from './assets/winner.svg';
 import { DealButton } from './components/DealButton';
 import { InfoBox } from './components/InfoBox';
 import { PlayField } from './components/PlayField';
 import { ResetButton } from './components/ResetButton';
-import { useDealMutation } from './generated/graphql-types';
+import { useDealMutation, Card } from './generated/graphql-types';
 
 const App: React.FC = () => {
   const [dealMutation, { data, loading }] = useDealMutation({
@@ -13,21 +13,26 @@ const App: React.FC = () => {
     },
   });
 
-  const [cardLog, setCardLog] = useState<CardType[]>([]);
+  const [cardLog, setCardLog] = useState<Card[]>([]);
+
+  useEffect(() => {
+    if (data?.deal?.cards) {
+      const cards = data?.deal.cards;
+      setCardLog((prevCardLog) => [...prevCardLog, ...cards]);
+    }
+  }, [data]);
 
   const handleDeal = async () => {
-    const receiveData = await dealMutation({
+    await dealMutation({
       variables: { isInitial: !cardLog.length },
     });
-    setCardLog((prevCardLog) => [...prevCardLog, ...(receiveData.data?.deal?.cards as CardType[])]);
   };
 
   const handleReset = async () => {
     setCardLog([]);
-    const receiveData = await dealMutation({
+    await dealMutation({
       variables: { isInitial: true },
     });
-    setCardLog((prevCardLog) => [...prevCardLog, ...(receiveData.data?.deal?.cards as CardType[])]);
   };
 
   const remainCount = useMemo(() => 52 - cardLog.length, [cardLog]);
@@ -55,11 +60,7 @@ const App: React.FC = () => {
           <img src={winner} alt="winner" />
         </div>
       )}
-      {!loading && data ? (
-        <PlayField cards={data?.deal?.cards as CardType[]} />
-      ) : (
-        <div className="h-320 w-96" />
-      )}
+      {!loading && data ? <PlayField cards={data.deal.cards} /> : <div className="h-320 w-96" />}
       <div className="text-center mt-32">
         {!remainAces && remainCount ? (
           <p className="text-white text-3xl">You lose. Better luck next time!</p>

@@ -34,7 +34,7 @@ const getTextColor = (suit: string) => {
   }
 };
 
-export const Card: React.FC<CardProps> = ({ number, suit, order }: CardProps) => {
+export const PlayingCard: React.FC<CardProps> = ({ number, suit, order }: CardProps) => {
   return (
     <div
       className={`transform rotate-angle_${order} translate-y-custom_${order} animate-popup_${order} ${getTextColor(

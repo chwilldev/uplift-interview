@@ -3,15 +3,15 @@ type Game {
 }
 
 type Card {
-  id: Int
-  number: String
-  suit: String
+  id: Int!
+  number: String!
+  suit: String!
 }
 
 type DealResult {
   success: Boolean!
-  game: Game
-  cards: [Card!]
+  game: Game!
+  cards: [Card!]!
 }
 
 type User {
@@ -25,5 +25,5 @@ type Query {
 }
 
 type Mutation {
-  deal(isInitial: Boolean!): DealResult
+  deal(isInitial: Boolean!): DealResult!
 }
