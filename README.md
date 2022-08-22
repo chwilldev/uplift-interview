@@ -46,7 +46,7 @@ The task is to build a simple card game. The designs are in Figma, you can see [
 
 The program should perform the following functions.
 
-1. Assuming a standard deck (52 cards of 4 suits: ♣ Clubs, ♦ Diamonds, ♥ Hearts, ♠ Spades).
+1. Assuming a standard deck (52 cards of 4 suits: ♣ Clover, ♦ Diamonds, ♥ Hearts, ♠ Spades).
 2. Press a "Deal" button to deal 5 random cards.
 3. Pressing the button again should deal 5 unique, random cards. Within the same game, you should never get the same cards again that you got in the past (just like a physical deck).
 4. Add a card counter which shows how many cards are dealt/left.
@@ -73,9 +73,9 @@ If you have any issues with husky/commit hooks, you may remove the \*.py section
 
 ### Design
 
-* [desktop](https://www.figma.com/file/TQSDNvCd0WJFhYQuwtUS8c/Interview-Card-Game?node-id=2%3A352)
+- [desktop](https://www.figma.com/file/TQSDNvCd0WJFhYQuwtUS8c/Interview-Card-Game?node-id=2%3A352)
 
-* [mobile](https://www.figma.com/file/TQSDNvCd0WJFhYQuwtUS8c/Interview-Card-Game?node-id=2%3A352)
+- [mobile](https://www.figma.com/file/TQSDNvCd0WJFhYQuwtUS8c/Interview-Card-Game?node-id=2%3A352)
 
 ### Requirements
 
@@ -103,7 +103,7 @@ Use Django (v3+), graphene (v2+), and a SQL database (postgres, for migrations).
 
 Session, auth or login are all optional, but clean implementations earn points.
 
-1. Assuming a standard deck (52 cards of 4 suits: ♣ Clubs, ♦ Diamonds, ♥ Hearts, ♠ Spades).
+1. Assuming a standard deck (52 cards of 4 suits: ♣ Clover, ♦ Diamonds, ♥ Hearts, ♠ Spades).
 2. Press a "Deal" button to deal 5 random cards.
    - Make this a mutation
 3. Pressing the button again should deal 5 unique, random cards. Within the same game, you should never get the same cards again that you got in the past (just like a physical deck).

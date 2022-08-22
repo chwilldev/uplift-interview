@@ -13,7 +13,6 @@ module.exports = {
   },
   plugins: ['@typescript-eslint', 'import', 'graphql'],
   extends: [
-    'react-app',
     'airbnb',
     'plugin:@typescript-eslint/recommended',
     'plugin:import/errors',

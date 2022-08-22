@@ -1,0 +1,13 @@
+mutation deal($isInitial: Boolean!) {
+  deal(isInitial: $isInitial) {
+    success
+    cards {
+      id
+      number
+      suit
+    }
+    game {
+      id
+    }
+  }
+}

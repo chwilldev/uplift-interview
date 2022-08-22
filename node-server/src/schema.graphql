@@ -2,11 +2,24 @@ type Game {
   id: ID!
 }
 
-type DealResult {
-  success: Boolean!
-  game: Game
+type Card {
+  id: Int!
+  number: String!
+  suit: Suit!
 }
 
+enum Suit {
+  Heart
+  Clover
+  Diamond
+  Spade
+}
+
+type DealResult {
+  success: Boolean!
+  game: Game!
+  cards: [Card!]!
+}
 
 type User {
   id: ID!
@@ -19,5 +32,5 @@ type Query {
 }
 
 type Mutation {
-  deal: DealResult
+  deal(isInitial: Boolean!): DealResult!
 }
